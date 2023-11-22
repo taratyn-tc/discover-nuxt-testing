@@ -1,4 +1,4 @@
-import {describe, expect, it} from "vitest"
+import {beforeEach, describe, expect, it} from "vitest"
 import {fetch, setup, startServer, useTestContext} from "@nuxt/test-utils"
 
 await setup({browser: false, server: true, nuxtConfig: {runtimeConfig: {foo: 'xxx'}}})
@@ -18,9 +18,11 @@ describe('/api/endpoint2', async () => {
 
 describe('/api/runtime-config', async () => {
     const URL = '/api/runtime-config';
-    it('should return 200', async () => {
+    beforeEach(async () => {
         process.env.NUXT_FOO = 'bar'
         await startServer()
+    })
+    it('should return 200', async () => {
         const r = await fetch(URL)
         expect(await r.text()).toBe('bar')
         expect(r.status).toBe(200)
