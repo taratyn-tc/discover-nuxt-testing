@@ -19,7 +19,7 @@ describe('/api/endpoint2', async () => {
 describe('/api/runtime-config', async () => {
     const URL = '/api/runtime-config';
     it('should return 200', async () => {
-        useTestContext().options.nuxtConfig.runtimeConfig = {foo: 'bar'}
+        process.env.NUXT_FOO = 'bar'
         await startServer()
         const r = await fetch(URL)
         expect(await r.text()).toBe('bar')
